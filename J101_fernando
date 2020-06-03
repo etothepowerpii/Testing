@@ -1,0 +1,65 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+void convert(char);
+void count();
+void countwhenzero();
+
+int posi,posj,orii=1,orij=2,totalmove=0,n,num;
+int a[3][4];
+char s[100];
+//test data: 32767 >> 12, 32207 >> 8
+
+int main(){
+    
+    int i,j,add=49;
+    gets(s);
+
+    a[0][0]=48;
+    a[1][0]=48;
+    a[2][0]=46;
+    
+    for(j=1;j<=3;j++){
+        for(i=0;i<=2;i++){
+            a[i][j]=add;
+            add++;
+        }
+    }
+    
+    for (i=0; i<strlen(s); i++) {
+        convert(s[i]);
+        if((posj==0) && (posi==0 || posi==1))
+            countwhenzero();
+        else
+            count();
+        orii=posi;
+        orij=posj;
+    }
+
+    printf("%d",totalmove);
+    return 0;
+}
+
+void convert(char target){
+    int i,j;
+    for (j=0; j<=3; j++) {
+        for(i=0;i<=2;i++){
+            if(a[i][j]==target){
+                posi=i;
+                posj=j;
+            }
+        }
+    }
+}
+
+void count(){
+    totalmove+=abs(posi-orii)+abs(posj-orij);
+}
+
+void countwhenzero(){
+    if(orii==0 || orii==1)
+        totalmove+=orij;
+    else
+        totalmove+=1+orij;
+}
